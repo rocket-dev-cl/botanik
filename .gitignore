@@ -1,0 +1,22 @@
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Configuración de editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Temporales y respaldos
+*.log
+*.tmp
+*.bak
+*~
+
+# Dependencias (por si más adelante se incorpora alguna herramienta)
+node_modules/
+
+# Nunca versionar el proyecto comprimido
+*.zip
+*.rar

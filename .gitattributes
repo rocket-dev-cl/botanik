@@ -1,0 +1,21 @@
+# Normaliza los finales de línea: LF en el repositorio, nativo en el working tree.
+# Evita diffs completos por CRLF cuando trabajan varias personas en Windows.
+* text=auto eol=lf
+
+# Binarios: nunca normalizar
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.svg text
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+
+# Lenguaje del repo en las estadísticas de GitHub
+*.html linguist-detectable=true
