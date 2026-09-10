@@ -1,13 +1,182 @@
-<!--
-  Vista: Crear / editar producto (admin)
-  Requerimientos: R.14, R.19
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de creacion y edicion de productos del catalogo de Botanik.">
+  <title>Nuevo producto | Administracion Botanik</title>
+  <link rel="icon" href="../img/ui/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
 
-  Contenido esperado (según los mockups del levantamiento):
-  - formulario: codigo (req, texto, min 3), nombre (req, max 100),
-    descripcion (opcional, max 500), precio (req, min 0, decimales),
-    stock (req, entero, min 0), stock critico (opcional, entero, min 0),
-    categoria y subcategoria (selects dependientes), etiquetas, imagen (opcional)
-  - mensajes de error junto a cada campo
+  <a class="bt-salto-contenido" href="#contenido">Saltar al contenido</a>
 
-  Scripts a cargar: ../js/main.js, ../js/admin.js, ../js/validaciones.js, ../js/ui.js
--->
+  <div class="bt-admin">
+
+    <header class="bt-admin-lateral">
+      <div class="bt-admin-marca">
+        <img src="../img/ui/logo-blanco.svg" alt="Botanik">
+        <p>Administracion</p>
+      </div>
+
+      <nav aria-label="Menu del administrador">
+        <ul class="bt-admin-menu">
+          <li><a href="index.html" data-bt-pagina="index.html">Inicio</a></li>
+          <li><a href="ordenes.html" data-bt-pagina="ordenes.html">Ordenes</a></li>
+          <li><a href="productos.html" data-bt-pagina="productos.html">Productos</a></li>
+          <li data-bt-solo-administrador><a href="usuarios.html" data-bt-pagina="usuarios.html">Usuarios</a></li>
+          <li><a href="../index.html">Ver la tienda</a></li>
+        </ul>
+      </nav>
+
+      <div class="bt-admin-usuario">
+        <span class="bt-admin-avatar" data-bt-iniciales-admin aria-hidden="true"></span>
+        <div>
+          <strong data-bt-nombre-admin></strong>
+          <span data-bt-perfil-admin></span>
+          <button class="bt-admin-salir" type="button" data-bt-cerrar-sesion data-bt-destino="../index.html?sesion=cerrada">Cerrar sesion</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="bt-admin-columna">
+      <main class="bt-admin-contenido" id="contenido">
+
+        <nav aria-label="Ruta de navegacion">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Administracion</a></li>
+            <li class="breadcrumb-item"><a href="productos.html">Productos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Formulario</li>
+          </ol>
+        </nav>
+
+        <div class="bt-admin-encabezado">
+          <div>
+            <h1 data-bt-titulo-form>Nuevo producto</h1>
+            <p class="text-body-secondary mb-0">Los campos marcados con <span class="bt-obligatorio">*</span> son obligatorios.</p>
+          </div>
+        </div>
+
+        <section>
+          <form class="bt-admin-form" id="formProducto">
+
+            <fieldset>
+              <legend>Identificacion</legend>
+              <div class="row g-3">
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="codigo">Codigo <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="text" id="codigo" name="codigo" minlength="3" placeholder="PL-001" autocomplete="off" required>
+                  <div class="invalid-feedback" data-bt-error="codigo"></div>
+                  <p class="form-text">Minimo 3 caracteres. Debe ser unico.</p>
+                </div>
+                <div class="col-12 col-md-8">
+                  <label class="form-label" for="nombre">Nombre <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="text" id="nombre" name="nombre" maxlength="100" required>
+                  <div class="invalid-feedback" data-bt-error="nombre"></div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="descripcion">Descripcion</label>
+                  <textarea class="form-control" id="descripcion" name="descripcion" rows="4" maxlength="500"></textarea>
+                  <div class="invalid-feedback" data-bt-error="descripcion"></div>
+                  <p class="form-text">Opcional. Maximo 500 caracteres.</p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Precio e inventario</legend>
+              <div class="row g-3">
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="precio">Precio <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input class="form-control" type="number" id="precio" name="precio" min="0" step="0.01" required>
+                  </div>
+                  <div class="invalid-feedback" data-bt-error="precio"></div>
+                  <p class="form-text">0 marca el producto como gratuito.</p>
+                </div>
+                <div class="col-6 col-md-4">
+                  <label class="form-label" for="stock">Stock <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="number" id="stock" name="stock" min="0" step="1" required>
+                  <div class="invalid-feedback" data-bt-error="stock"></div>
+                </div>
+                <div class="col-6 col-md-4">
+                  <label class="form-label" for="stockCritico">Stock critico</label>
+                  <input class="form-control" type="number" id="stockCritico" name="stockCritico" min="0" step="1">
+                  <div class="invalid-feedback" data-bt-error="stockCritico"></div>
+                  <p class="form-text">Opcional. Dispara la alerta del listado.</p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Clasificacion</legend>
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="categoria">Categoria <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <select class="form-select" id="categoria" name="categoria" required>
+                    <option value="">Selecciona una categoria</option>
+                  </select>
+                  <div class="invalid-feedback" data-bt-error="categoria"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="subcategoria">Subcategoria <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <select class="form-select" id="subcategoria" name="subcategoria" disabled required>
+                    <option value="">Elige una categoria primero</option>
+                  </select>
+                  <div class="invalid-feedback" data-bt-error="subcategoria"></div>
+                </div>
+                <div class="col-12">
+                  <p class="form-label mb-2">Etiquetas</p>
+                  <div class="bt-filtro-etiquetas" data-bt-etiquetas-producto></div>
+                  <p class="form-text">Dependen de la categoria. Alimentan los filtros de la tienda.</p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Imagen</legend>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="imagen">Ruta de la imagen</label>
+                  <input class="form-control" type="text" id="imagen" name="imagen" placeholder="img/productos/pl-001.jpg" autocomplete="off">
+                  <p class="form-text">Opcional. Si se deja vacio se muestra una imagen de reemplazo.</p>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="bt-admin-acciones-form">
+              <button class="btn btn-primary" type="submit">Guardar producto</button>
+              <a class="btn btn-outline-secondary" href="productos.html">Cancelar</a>
+            </div>
+
+          </form>
+        </section>
+
+      </main>
+
+      <footer class="bt-admin-pie">
+        Botanik &middot; Modulo de administracion &middot; <span data-bt-anio></span>
+      </footer>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/data/categorias.js"></script>
+  <script src="../js/data/productos.js"></script>
+  <script src="../js/data/regiones.js"></script>
+  <script src="../js/data/usuarios.js"></script>
+  <script src="../js/data/ordenes.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/validaciones.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

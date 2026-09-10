@@ -1,11 +1,169 @@
-<!--
-  Vista: Crear / editar usuario (admin)
-  Requerimientos: R.16, R.19
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de creacion y edicion de usuarios del sistema Botanik.">
+  <title>Nuevo usuario | Administracion Botanik</title>
+  <link rel="icon" href="../img/ui/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
 
-  Contenido esperado (según los mockups del levantamiento):
-  - mismos campos que el registro publico
-  - ademas: tipo de usuario (select: Administrador, Cliente, Vendedor) requerido
-  - mensajes de error junto a cada campo
+  <a class="bt-salto-contenido" href="#contenido">Saltar al contenido</a>
 
-  Scripts a cargar: ../js/main.js, ../js/admin.js, ../js/validaciones.js, ../js/ui.js
--->
+  <div class="bt-admin">
+
+    <header class="bt-admin-lateral">
+      <div class="bt-admin-marca">
+        <img src="../img/ui/logo-blanco.svg" alt="Botanik">
+        <p>Administracion</p>
+      </div>
+
+      <nav aria-label="Menu del administrador">
+        <ul class="bt-admin-menu">
+          <li><a href="index.html" data-bt-pagina="index.html">Inicio</a></li>
+          <li><a href="ordenes.html" data-bt-pagina="ordenes.html">Ordenes</a></li>
+          <li><a href="productos.html" data-bt-pagina="productos.html">Productos</a></li>
+          <li data-bt-solo-administrador><a href="usuarios.html" data-bt-pagina="usuarios.html">Usuarios</a></li>
+          <li><a href="../index.html">Ver la tienda</a></li>
+        </ul>
+      </nav>
+
+      <div class="bt-admin-usuario">
+        <span class="bt-admin-avatar" data-bt-iniciales-admin aria-hidden="true"></span>
+        <div>
+          <strong data-bt-nombre-admin></strong>
+          <span data-bt-perfil-admin></span>
+          <button class="bt-admin-salir" type="button" data-bt-cerrar-sesion data-bt-destino="../index.html?sesion=cerrada">Cerrar sesion</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="bt-admin-columna">
+      <main class="bt-admin-contenido" id="contenido">
+
+        <nav aria-label="Ruta de navegacion">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Administracion</a></li>
+            <li class="breadcrumb-item"><a href="usuarios.html">Usuarios</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Formulario</li>
+          </ol>
+        </nav>
+
+        <div class="bt-admin-encabezado">
+          <div>
+            <h1 data-bt-titulo-form>Nuevo usuario</h1>
+            <p class="text-body-secondary mb-0">Los campos marcados con <span class="bt-obligatorio">*</span> son obligatorios.</p>
+          </div>
+        </div>
+
+        <section>
+          <form class="bt-admin-form" id="formUsuario">
+
+            <fieldset>
+              <legend>Identificacion</legend>
+              <div class="row g-3">
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="run">RUN <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="text" id="run" name="run" minlength="7" maxlength="9" pattern="[0-9]{6,8}[0-9Kk]" placeholder="211234563" autocomplete="off" required>
+                  <div class="invalid-feedback" data-bt-error="run"></div>
+                  <p class="form-text">Sin puntos ni guion, con digito verificador.</p>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="nombre">Nombre <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="text" id="nombre" name="nombre" maxlength="50" required>
+                  <div class="invalid-feedback" data-bt-error="nombre"></div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label" for="apellidos">Apellidos <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="text" id="apellidos" name="apellidos" maxlength="100" required>
+                  <div class="invalid-feedback" data-bt-error="apellidos"></div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Cuenta</legend>
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="correo">Correo electronico <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="email" id="correo" name="correo" maxlength="100" required>
+                  <div class="invalid-feedback" data-bt-error="correo"></div>
+                  <p class="form-text">Solo @duoc.cl, @profesor.duoc.cl o @gmail.com.</p>
+                </div>
+                <div class="col-12 col-md-3">
+                  <label class="form-label" for="tipo">Tipo de usuario <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <select class="form-select" id="tipo" name="tipo" required>
+                    <option value="">Selecciona un perfil</option>
+                  </select>
+                  <div class="invalid-feedback" data-bt-error="tipo"></div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <label class="form-label" for="fechaNacimiento">Fecha de nacimiento</label>
+                  <input class="form-control" type="date" id="fechaNacimiento" name="fechaNacimiento">
+                  <div class="invalid-feedback" data-bt-error="fechaNacimiento"></div>
+                  <p class="form-text">Opcional.</p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Ubicacion</legend>
+              <div class="row g-3">
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="region">Region <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <select class="form-select" id="region" name="region" required>
+                    <option value="">Selecciona una region</option>
+                  </select>
+                  <div class="invalid-feedback" data-bt-error="region"></div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="comuna">Comuna <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <select class="form-select" id="comuna" name="comuna" disabled required>
+                    <option value="">Elige una region primero</option>
+                  </select>
+                  <div class="invalid-feedback" data-bt-error="comuna"></div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="direccion">Direccion <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                  <input class="form-control" type="text" id="direccion" name="direccion" maxlength="300" required>
+                  <div class="invalid-feedback" data-bt-error="direccion"></div>
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="bt-admin-acciones-form">
+              <button class="btn btn-primary" type="submit">Guardar usuario</button>
+              <a class="btn btn-outline-secondary" href="usuarios.html">Cancelar</a>
+            </div>
+
+          </form>
+        </section>
+
+      </main>
+
+      <footer class="bt-admin-pie">
+        Botanik &middot; Modulo de administracion &middot; <span data-bt-anio></span>
+      </footer>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/data/categorias.js"></script>
+  <script src="../js/data/productos.js"></script>
+  <script src="../js/data/regiones.js"></script>
+  <script src="../js/data/usuarios.js"></script>
+  <script src="../js/data/ordenes.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/validaciones.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
