@@ -3,13 +3,469 @@
  * Alimenta los selects dependientes del formulario de usuario (R.19).
  *
  * Esquema:
- *   { id: "13", nombre: "Región Metropolitana de Santiago",
+ *   { id: "13", nombre: "Metropolitana de Santiago",
  *     comunas: [ { id: "13101", nombre: "Santiago" }, ... ] }
  *
- * PENDIENTE: el levantamiento hace referencia a un arreglo de regiones y
- * comunas que no fue proporcionado junto con la documentacion. Esta
- * dependencia esta registrada en la seccion 3.4 del ERS.
+ * ORIGEN DE LOS DATOS
+ *   El levantamiento hacia referencia a un arreglo de regiones y comunas que
+ *   nunca se entrego junto con la documentacion (dependencia registrada en la
+ *   seccion 3.4 del ERS). Se construyo aca a partir del Codigo Unico
+ *   Territorial (CUT) de la Subdere: 16 regiones y 346 comunas.
+ *
+ * CONVENCION DE IDENTIFICADORES
+ *   El id de la region son los dos digitos del CUT y el de la comuna los cinco
+ *   digitos del CUT. No son correlativos inventados: se uso el codigo oficial
+ *   para que el dato sea verificable contra una fuente externa y para que cada
+ *   comuna quede ligada a su region por prefijo.
+ *
+ *   El id es texto, no numero: "05" como numero seria 5 y perderia el cero.
+ *
+ * ORDEN
+ *   De norte a sur, que es como se espera ver una region chilena en un select.
+ *   No alfabetico ni por codigo.
  */
 
 const REGIONES = [
+  {
+    id: "15",
+    nombre: "Arica y Parinacota",
+    comunas: [
+      { id: "15101", nombre: "Arica" },
+      { id: "15102", nombre: "Camarones" },
+      { id: "15201", nombre: "Putre" },
+      { id: "15202", nombre: "General Lagos" }
+    ]
+  },
+  {
+    id: "01",
+    nombre: "Tarapacá",
+    comunas: [
+      { id: "01101", nombre: "Iquique" },
+      { id: "01107", nombre: "Alto Hospicio" },
+      { id: "01401", nombre: "Pozo Almonte" },
+      { id: "01402", nombre: "Camiña" },
+      { id: "01403", nombre: "Colchane" },
+      { id: "01404", nombre: "Huara" },
+      { id: "01405", nombre: "Pica" }
+    ]
+  },
+  {
+    id: "02",
+    nombre: "Antofagasta",
+    comunas: [
+      { id: "02101", nombre: "Antofagasta" },
+      { id: "02102", nombre: "Mejillones" },
+      { id: "02103", nombre: "Sierra Gorda" },
+      { id: "02104", nombre: "Taltal" },
+      { id: "02201", nombre: "Calama" },
+      { id: "02202", nombre: "Ollagüe" },
+      { id: "02203", nombre: "San Pedro de Atacama" },
+      { id: "02301", nombre: "Tocopilla" },
+      { id: "02302", nombre: "María Elena" }
+    ]
+  },
+  {
+    id: "03",
+    nombre: "Atacama",
+    comunas: [
+      { id: "03101", nombre: "Copiapó" },
+      { id: "03102", nombre: "Caldera" },
+      { id: "03103", nombre: "Tierra Amarilla" },
+      { id: "03201", nombre: "Chañaral" },
+      { id: "03202", nombre: "Diego de Almagro" },
+      { id: "03301", nombre: "Vallenar" },
+      { id: "03302", nombre: "Alto del Carmen" },
+      { id: "03303", nombre: "Freirina" },
+      { id: "03304", nombre: "Huasco" }
+    ]
+  },
+  {
+    id: "04",
+    nombre: "Coquimbo",
+    comunas: [
+      { id: "04101", nombre: "La Serena" },
+      { id: "04102", nombre: "Coquimbo" },
+      { id: "04103", nombre: "Andacollo" },
+      { id: "04104", nombre: "La Higuera" },
+      { id: "04105", nombre: "Paihuano" },
+      { id: "04106", nombre: "Vicuña" },
+      { id: "04201", nombre: "Illapel" },
+      { id: "04202", nombre: "Canela" },
+      { id: "04203", nombre: "Los Vilos" },
+      { id: "04204", nombre: "Salamanca" },
+      { id: "04301", nombre: "Ovalle" },
+      { id: "04302", nombre: "Combarbalá" },
+      { id: "04303", nombre: "Monte Patria" },
+      { id: "04304", nombre: "Punitaqui" },
+      { id: "04305", nombre: "Río Hurtado" }
+    ]
+  },
+  {
+    id: "05",
+    nombre: "Valparaíso",
+    comunas: [
+      { id: "05101", nombre: "Valparaíso" },
+      { id: "05102", nombre: "Casablanca" },
+      { id: "05103", nombre: "Concón" },
+      { id: "05104", nombre: "Juan Fernández" },
+      { id: "05105", nombre: "Puchuncaví" },
+      { id: "05107", nombre: "Quintero" },
+      { id: "05109", nombre: "Viña del Mar" },
+      { id: "05201", nombre: "Isla de Pascua" },
+      { id: "05301", nombre: "Los Andes" },
+      { id: "05302", nombre: "Calle Larga" },
+      { id: "05303", nombre: "Rinconada" },
+      { id: "05304", nombre: "San Esteban" },
+      { id: "05401", nombre: "La Ligua" },
+      { id: "05402", nombre: "Cabildo" },
+      { id: "05403", nombre: "Papudo" },
+      { id: "05404", nombre: "Petorca" },
+      { id: "05405", nombre: "Zapallar" },
+      { id: "05501", nombre: "Quillota" },
+      { id: "05502", nombre: "La Calera" },
+      { id: "05503", nombre: "Hijuelas" },
+      { id: "05504", nombre: "La Cruz" },
+      { id: "05506", nombre: "Nogales" },
+      { id: "05601", nombre: "San Antonio" },
+      { id: "05602", nombre: "Algarrobo" },
+      { id: "05603", nombre: "Cartagena" },
+      { id: "05604", nombre: "El Quisco" },
+      { id: "05605", nombre: "El Tabo" },
+      { id: "05606", nombre: "Santo Domingo" },
+      { id: "05701", nombre: "San Felipe" },
+      { id: "05702", nombre: "Catemu" },
+      { id: "05703", nombre: "Llaillay" },
+      { id: "05704", nombre: "Panquehue" },
+      { id: "05705", nombre: "Putaendo" },
+      { id: "05706", nombre: "Santa María" },
+      { id: "05801", nombre: "Quilpué" },
+      { id: "05802", nombre: "Limache" },
+      { id: "05803", nombre: "Olmué" },
+      { id: "05804", nombre: "Villa Alemana" }
+    ]
+  },
+  {
+    id: "13",
+    nombre: "Metropolitana de Santiago",
+    comunas: [
+      { id: "13101", nombre: "Santiago" },
+      { id: "13102", nombre: "Cerrillos" },
+      { id: "13103", nombre: "Cerro Navia" },
+      { id: "13104", nombre: "Conchalí" },
+      { id: "13105", nombre: "El Bosque" },
+      { id: "13106", nombre: "Estación Central" },
+      { id: "13107", nombre: "Huechuraba" },
+      { id: "13108", nombre: "Independencia" },
+      { id: "13109", nombre: "La Cisterna" },
+      { id: "13110", nombre: "La Florida" },
+      { id: "13111", nombre: "La Granja" },
+      { id: "13112", nombre: "La Pintana" },
+      { id: "13113", nombre: "La Reina" },
+      { id: "13114", nombre: "Las Condes" },
+      { id: "13115", nombre: "Lo Barnechea" },
+      { id: "13116", nombre: "Lo Espejo" },
+      { id: "13117", nombre: "Lo Prado" },
+      { id: "13118", nombre: "Macul" },
+      { id: "13119", nombre: "Maipú" },
+      { id: "13120", nombre: "Ñuñoa" },
+      { id: "13121", nombre: "Pedro Aguirre Cerda" },
+      { id: "13122", nombre: "Peñalolén" },
+      { id: "13123", nombre: "Providencia" },
+      { id: "13124", nombre: "Pudahuel" },
+      { id: "13125", nombre: "Quilicura" },
+      { id: "13126", nombre: "Quinta Normal" },
+      { id: "13127", nombre: "Recoleta" },
+      { id: "13128", nombre: "Renca" },
+      { id: "13129", nombre: "San Joaquín" },
+      { id: "13130", nombre: "San Miguel" },
+      { id: "13131", nombre: "San Ramón" },
+      { id: "13132", nombre: "Vitacura" },
+      { id: "13201", nombre: "Puente Alto" },
+      { id: "13202", nombre: "Pirque" },
+      { id: "13203", nombre: "San José de Maipo" },
+      { id: "13301", nombre: "Colina" },
+      { id: "13302", nombre: "Lampa" },
+      { id: "13303", nombre: "Tiltil" },
+      { id: "13401", nombre: "San Bernardo" },
+      { id: "13402", nombre: "Buin" },
+      { id: "13403", nombre: "Calera de Tango" },
+      { id: "13404", nombre: "Paine" },
+      { id: "13501", nombre: "Melipilla" },
+      { id: "13502", nombre: "Alhué" },
+      { id: "13503", nombre: "Curacaví" },
+      { id: "13504", nombre: "María Pinto" },
+      { id: "13505", nombre: "San Pedro" },
+      { id: "13601", nombre: "Talagante" },
+      { id: "13602", nombre: "El Monte" },
+      { id: "13603", nombre: "Isla de Maipo" },
+      { id: "13604", nombre: "Padre Hurtado" },
+      { id: "13605", nombre: "Peñaflor" }
+    ]
+  },
+  {
+    id: "06",
+    nombre: "Libertador General Bernardo O'Higgins",
+    comunas: [
+      { id: "06101", nombre: "Rancagua" },
+      { id: "06102", nombre: "Codegua" },
+      { id: "06103", nombre: "Coinco" },
+      { id: "06104", nombre: "Coltauco" },
+      { id: "06105", nombre: "Doñihue" },
+      { id: "06106", nombre: "Graneros" },
+      { id: "06107", nombre: "Las Cabras" },
+      { id: "06108", nombre: "Machalí" },
+      { id: "06109", nombre: "Malloa" },
+      { id: "06110", nombre: "Mostazal" },
+      { id: "06111", nombre: "Olivar" },
+      { id: "06112", nombre: "Peumo" },
+      { id: "06113", nombre: "Pichidegua" },
+      { id: "06114", nombre: "Quinta de Tilcoco" },
+      { id: "06115", nombre: "Rengo" },
+      { id: "06116", nombre: "Requínoa" },
+      { id: "06117", nombre: "San Vicente" },
+      { id: "06201", nombre: "Pichilemu" },
+      { id: "06202", nombre: "La Estrella" },
+      { id: "06203", nombre: "Litueche" },
+      { id: "06204", nombre: "Marchihue" },
+      { id: "06205", nombre: "Navidad" },
+      { id: "06206", nombre: "Paredones" },
+      { id: "06301", nombre: "San Fernando" },
+      { id: "06302", nombre: "Chépica" },
+      { id: "06303", nombre: "Chimbarongo" },
+      { id: "06304", nombre: "Lolol" },
+      { id: "06305", nombre: "Nancagua" },
+      { id: "06306", nombre: "Palmilla" },
+      { id: "06307", nombre: "Peralillo" },
+      { id: "06308", nombre: "Placilla" },
+      { id: "06309", nombre: "Pumanque" },
+      { id: "06310", nombre: "Santa Cruz" }
+    ]
+  },
+  {
+    id: "07",
+    nombre: "Maule",
+    comunas: [
+      { id: "07101", nombre: "Talca" },
+      { id: "07102", nombre: "Constitución" },
+      { id: "07103", nombre: "Curepto" },
+      { id: "07104", nombre: "Empedrado" },
+      { id: "07105", nombre: "Maule" },
+      { id: "07106", nombre: "Pelarco" },
+      { id: "07107", nombre: "Pencahue" },
+      { id: "07108", nombre: "Río Claro" },
+      { id: "07109", nombre: "San Clemente" },
+      { id: "07110", nombre: "San Rafael" },
+      { id: "07201", nombre: "Cauquenes" },
+      { id: "07202", nombre: "Chanco" },
+      { id: "07203", nombre: "Pelluhue" },
+      { id: "07301", nombre: "Curicó" },
+      { id: "07302", nombre: "Hualañé" },
+      { id: "07303", nombre: "Licantén" },
+      { id: "07304", nombre: "Molina" },
+      { id: "07305", nombre: "Rauco" },
+      { id: "07306", nombre: "Romeral" },
+      { id: "07307", nombre: "Sagrada Familia" },
+      { id: "07308", nombre: "Teno" },
+      { id: "07309", nombre: "Vichuquén" },
+      { id: "07401", nombre: "Linares" },
+      { id: "07402", nombre: "Colbún" },
+      { id: "07403", nombre: "Longaví" },
+      { id: "07404", nombre: "Parral" },
+      { id: "07405", nombre: "Retiro" },
+      { id: "07406", nombre: "San Javier" },
+      { id: "07407", nombre: "Villa Alegre" },
+      { id: "07408", nombre: "Yerbas Buenas" }
+    ]
+  },
+  {
+    id: "16",
+    nombre: "Ñuble",
+    comunas: [
+      { id: "16101", nombre: "Chillán" },
+      { id: "16102", nombre: "Bulnes" },
+      { id: "16103", nombre: "Chillán Viejo" },
+      { id: "16104", nombre: "El Carmen" },
+      { id: "16105", nombre: "Pemuco" },
+      { id: "16106", nombre: "Pinto" },
+      { id: "16107", nombre: "Quillón" },
+      { id: "16108", nombre: "San Ignacio" },
+      { id: "16109", nombre: "Yungay" },
+      { id: "16201", nombre: "Quirihue" },
+      { id: "16202", nombre: "Cobquecura" },
+      { id: "16203", nombre: "Coelemu" },
+      { id: "16204", nombre: "Ninhue" },
+      { id: "16205", nombre: "Portezuelo" },
+      { id: "16206", nombre: "Ránquil" },
+      { id: "16207", nombre: "Treguaco" },
+      { id: "16301", nombre: "San Carlos" },
+      { id: "16302", nombre: "Coihueco" },
+      { id: "16303", nombre: "Ñiquén" },
+      { id: "16304", nombre: "San Fabián" },
+      { id: "16305", nombre: "San Nicolás" }
+    ]
+  },
+  {
+    id: "08",
+    nombre: "Biobío",
+    comunas: [
+      { id: "08101", nombre: "Concepción" },
+      { id: "08102", nombre: "Coronel" },
+      { id: "08103", nombre: "Chiguayante" },
+      { id: "08104", nombre: "Florida" },
+      { id: "08105", nombre: "Hualqui" },
+      { id: "08106", nombre: "Lota" },
+      { id: "08107", nombre: "Penco" },
+      { id: "08108", nombre: "San Pedro de la Paz" },
+      { id: "08109", nombre: "Santa Juana" },
+      { id: "08110", nombre: "Talcahuano" },
+      { id: "08111", nombre: "Tomé" },
+      { id: "08112", nombre: "Hualpén" },
+      { id: "08201", nombre: "Lebu" },
+      { id: "08202", nombre: "Arauco" },
+      { id: "08203", nombre: "Cañete" },
+      { id: "08204", nombre: "Contulmo" },
+      { id: "08205", nombre: "Curanilahue" },
+      { id: "08206", nombre: "Los Álamos" },
+      { id: "08207", nombre: "Tirúa" },
+      { id: "08301", nombre: "Los Ángeles" },
+      { id: "08302", nombre: "Antuco" },
+      { id: "08303", nombre: "Cabrero" },
+      { id: "08304", nombre: "Laja" },
+      { id: "08305", nombre: "Mulchén" },
+      { id: "08306", nombre: "Nacimiento" },
+      { id: "08307", nombre: "Negrete" },
+      { id: "08308", nombre: "Quilaco" },
+      { id: "08309", nombre: "Quilleco" },
+      { id: "08310", nombre: "San Rosendo" },
+      { id: "08311", nombre: "Santa Bárbara" },
+      { id: "08312", nombre: "Tucapel" },
+      { id: "08313", nombre: "Yumbel" },
+      { id: "08314", nombre: "Alto Biobío" }
+    ]
+  },
+  {
+    id: "09",
+    nombre: "La Araucanía",
+    comunas: [
+      { id: "09101", nombre: "Temuco" },
+      { id: "09102", nombre: "Carahue" },
+      { id: "09103", nombre: "Cunco" },
+      { id: "09104", nombre: "Curarrehue" },
+      { id: "09105", nombre: "Freire" },
+      { id: "09106", nombre: "Galvarino" },
+      { id: "09107", nombre: "Gorbea" },
+      { id: "09108", nombre: "Lautaro" },
+      { id: "09109", nombre: "Loncoche" },
+      { id: "09110", nombre: "Melipeuco" },
+      { id: "09111", nombre: "Nueva Imperial" },
+      { id: "09112", nombre: "Padre Las Casas" },
+      { id: "09113", nombre: "Perquenco" },
+      { id: "09114", nombre: "Pitrufquén" },
+      { id: "09115", nombre: "Pucón" },
+      { id: "09116", nombre: "Saavedra" },
+      { id: "09117", nombre: "Teodoro Schmidt" },
+      { id: "09118", nombre: "Toltén" },
+      { id: "09119", nombre: "Vilcún" },
+      { id: "09120", nombre: "Villarrica" },
+      { id: "09121", nombre: "Cholchol" },
+      { id: "09201", nombre: "Angol" },
+      { id: "09202", nombre: "Collipulli" },
+      { id: "09203", nombre: "Curacautín" },
+      { id: "09204", nombre: "Ercilla" },
+      { id: "09205", nombre: "Lonquimay" },
+      { id: "09206", nombre: "Los Sauces" },
+      { id: "09207", nombre: "Lumaco" },
+      { id: "09208", nombre: "Purén" },
+      { id: "09209", nombre: "Renaico" },
+      { id: "09210", nombre: "Traiguén" },
+      { id: "09211", nombre: "Victoria" }
+    ]
+  },
+  {
+    id: "14",
+    nombre: "Los Ríos",
+    comunas: [
+      { id: "14101", nombre: "Valdivia" },
+      { id: "14102", nombre: "Corral" },
+      { id: "14103", nombre: "Lanco" },
+      { id: "14104", nombre: "Los Lagos" },
+      { id: "14105", nombre: "Máfil" },
+      { id: "14106", nombre: "Mariquina" },
+      { id: "14107", nombre: "Paillaco" },
+      { id: "14108", nombre: "Panguipulli" },
+      { id: "14201", nombre: "La Unión" },
+      { id: "14202", nombre: "Futrono" },
+      { id: "14203", nombre: "Lago Ranco" },
+      { id: "14204", nombre: "Río Bueno" }
+    ]
+  },
+  {
+    id: "10",
+    nombre: "Los Lagos",
+    comunas: [
+      { id: "10101", nombre: "Puerto Montt" },
+      { id: "10102", nombre: "Calbuco" },
+      { id: "10103", nombre: "Cochamó" },
+      { id: "10104", nombre: "Fresia" },
+      { id: "10105", nombre: "Frutillar" },
+      { id: "10106", nombre: "Los Muermos" },
+      { id: "10107", nombre: "Llanquihue" },
+      { id: "10108", nombre: "Maullín" },
+      { id: "10109", nombre: "Puerto Varas" },
+      { id: "10201", nombre: "Castro" },
+      { id: "10202", nombre: "Ancud" },
+      { id: "10203", nombre: "Chonchi" },
+      { id: "10204", nombre: "Curaco de Vélez" },
+      { id: "10205", nombre: "Dalcahue" },
+      { id: "10206", nombre: "Puqueldón" },
+      { id: "10207", nombre: "Queilén" },
+      { id: "10208", nombre: "Quellón" },
+      { id: "10209", nombre: "Quemchi" },
+      { id: "10210", nombre: "Quinchao" },
+      { id: "10301", nombre: "Osorno" },
+      { id: "10302", nombre: "Puerto Octay" },
+      { id: "10303", nombre: "Purranque" },
+      { id: "10304", nombre: "Puyehue" },
+      { id: "10305", nombre: "Río Negro" },
+      { id: "10306", nombre: "San Juan de la Costa" },
+      { id: "10307", nombre: "San Pablo" },
+      { id: "10401", nombre: "Chaitén" },
+      { id: "10402", nombre: "Futaleufú" },
+      { id: "10403", nombre: "Hualaihué" },
+      { id: "10404", nombre: "Palena" }
+    ]
+  },
+  {
+    id: "11",
+    nombre: "Aysén del General Carlos Ibáñez del Campo",
+    comunas: [
+      { id: "11101", nombre: "Coyhaique" },
+      { id: "11102", nombre: "Lago Verde" },
+      { id: "11201", nombre: "Aysén" },
+      { id: "11202", nombre: "Cisnes" },
+      { id: "11203", nombre: "Guaitecas" },
+      { id: "11301", nombre: "Cochrane" },
+      { id: "11302", nombre: "O'Higgins" },
+      { id: "11303", nombre: "Tortel" },
+      { id: "11401", nombre: "Chile Chico" },
+      { id: "11402", nombre: "Río Ibáñez" }
+    ]
+  },
+  {
+    id: "12",
+    nombre: "Magallanes y de la Antártica Chilena",
+    comunas: [
+      { id: "12101", nombre: "Punta Arenas" },
+      { id: "12102", nombre: "Laguna Blanca" },
+      { id: "12103", nombre: "Río Verde" },
+      { id: "12104", nombre: "San Gregorio" },
+      { id: "12201", nombre: "Cabo de Hornos" },
+      { id: "12202", nombre: "Antártica" },
+      { id: "12301", nombre: "Porvenir" },
+      { id: "12302", nombre: "Primavera" },
+      { id: "12303", nombre: "Timaukel" },
+      { id: "12401", nombre: "Natales" },
+      { id: "12402", nombre: "Torres del Paine" }
+    ]
+  }
 ];
