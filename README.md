@@ -180,10 +180,3 @@ La especificación de requisitos, la planilla de requerimientos, el análisis de
 interfaces y la bitácora de decisiones son documentación de gestión del proyecto y se
 mantienen fuera del repositorio. Lo que se versiona acá es lo que necesita quien clona
 para entender y ejecutar el código.
-
-## Equipo
-
-| Integrante | Responsabilidad |
-|---|---|
-| [Nombre 1] | Módulo de administración completo, validaciones de producto y usuario, control de acceso por rol |
-| [Nombre 2] | Tienda pública: catálogo, detalle, carrito, contenidos y validaciones de la tienda |
