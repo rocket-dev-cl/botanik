@@ -1,13 +1,154 @@
-<!--
-  Vista: Inicio de sesion
-  Requerimientos: R.10
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inicia sesion en Botanik para acceder a tu cuenta y, segun tu perfil, al modulo de administracion.">
+  <title>Iniciar sesion | Botanik</title>
+  <link rel="icon" href="img/ui/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
 
-  Contenido esperado (según los mockups del levantamiento):
-  - logo y nombre de la empresa
-  - formulario: correo (req, max 100, dominios @duoc.cl / @profesor.duoc.cl / @gmail.com),
-    contrasena (req, 4 a 10 caracteres)
-  - enlace a registro
-  - mensajes de error junto a cada campo
+  <a class="bt-salto-contenido" href="#contenido">Saltar al contenido</a>
 
-  Scripts a cargar: main.js, validaciones.js, ui.js
--->
+  <header class="bt-cabecera">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg py-2" aria-label="Navegacion principal">
+        <a class="navbar-brand bt-logo" href="index.html">
+          <img src="img/ui/logo.svg" alt="Botanik">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir el menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav bt-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html" data-bt-pagina="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="productos.html" data-bt-pagina="productos.html">Productos</a></li>
+            <li class="nav-item"><a class="nav-link" href="nosotros.html" data-bt-pagina="nosotros.html">Nosotros</a></li>
+            <li class="nav-item"><a class="nav-link" href="blogs.html" data-bt-pagina="blogs.html">Blogs</a></li>
+            <li class="nav-item"><a class="nav-link" href="contacto.html" data-bt-pagina="contacto.html">Contacto</a></li>
+          </ul>
+          <ul class="navbar-nav bt-acceso align-items-lg-center">
+            <li class="nav-item" data-bt-sesion-invitado><a class="nav-link" href="login.html">Iniciar sesion</a></li>
+            <li class="nav-item" data-bt-sesion-invitado><a class="nav-link" href="registro.html">Registrar usuario</a></li>
+            <li class="nav-item d-none" data-bt-sesion-activa><span class="nav-link">Hola, <span data-bt-nombre-usuario></span></span></li>
+            <li class="nav-item d-none" data-bt-sesion-activa data-bt-enlace-admin><a class="nav-link" href="admin/index.html">Administracion</a></li>
+            <li class="nav-item d-none" data-bt-sesion-activa><button class="nav-link" type="button" data-bt-cerrar-sesion data-bt-destino="index.html?sesion=cerrada">Cerrar sesion</button></li>
+            <li class="nav-item ms-lg-3">
+              <a class="nav-link bt-carrito-enlace" href="carrito.html">
+                Carrito <span class="bt-carrito-conteo" data-bt-conteo-carrito>0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="container py-4 py-lg-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+
+          <section class="text-center bt-marca-form">
+            <img src="img/ui/logo.svg" alt="Botanik">
+            <h1 class="h3 mt-3">Iniciar sesion</h1>
+          </section>
+
+          <section class="mt-4">
+            <form class="bt-tarjeta-form" id="formLogin">
+              <div class="mb-3">
+                <label class="form-label" for="correo">Correo electronico <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                <input class="form-control" type="email" id="correo" name="correo" maxlength="100" autocomplete="email" required>
+                <div class="invalid-feedback" data-bt-error="correo"></div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="contrasena">Contrasena <span class="bt-obligatorio" aria-hidden="true">*</span></label>
+                <input class="form-control" type="password" id="contrasena" name="contrasena" minlength="4" maxlength="10" autocomplete="current-password" required>
+                <div class="invalid-feedback" data-bt-error="contrasena"></div>
+                <p class="form-text">Entre 4 y 10 caracteres.</p>
+              </div>
+
+              <button class="btn btn-primary btn-lg w-100" type="submit">Entrar</button>
+
+              <p class="text-center mt-3 mb-0">
+                No tienes cuenta? <a href="registro.html">Registrate</a>
+              </p>
+            </form>
+          </section>
+
+          <section class="mt-4">
+            <div class="alert alert-warning mb-0">
+              <h2 class="h6">Cuentas de prueba</h2>
+              <p class="small mb-2">Esta entrega no tiene servidor, por lo que no se verifican contrasenas: basta que el correo exista y que la contrasena cumpla el largo.</p>
+              <ul class="small mb-0 ps-3">
+                <li>Administrador: <code>camila.rojas@profesor.duoc.cl</code></li>
+                <li>Vendedor: <code>v.cortes@duoc.cl</code></li>
+                <li>Cliente: <code>josefa.navarro@gmail.com</code></li>
+              </ul>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bt-pie">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <img src="img/ui/logo-blanco.svg" alt="Botanik">
+          <p class="mt-3 mb-0 small">Vivero en linea especializado en plantas, maceteros, sustratos y herramientas de jardineria. Despacho a todo Chile.</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h2>Catalogo</h2>
+          <ul class="bt-pie-lista mt-3">
+            <li><a href="productos.html?categoria=plantas">Plantas</a></li>
+            <li><a href="productos.html?categoria=maceteros">Maceteros</a></li>
+            <li><a href="productos.html?categoria=herramientas">Herramientas</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h2>Botanik</h2>
+          <ul class="bt-pie-lista mt-3">
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-lg-4">
+          <h2>Recibe consejos de cuidado</h2>
+          <form class="mt-3" id="formBoletin">
+            <label class="form-label visually-hidden" for="correoBoletin">Correo electronico</label>
+            <div class="input-group">
+              <input class="form-control" type="email" id="correoBoletin" name="correoBoletin" placeholder="tu@correo.cl" autocomplete="email" maxlength="100">
+              <button class="btn btn-light" type="submit">Suscribir</button>
+            </div>
+            <div class="invalid-feedback" data-bt-error="correoBoletin"></div>
+          </form>
+          <div class="bt-pagos mt-3">
+            <img src="img/ui/pago-visa.svg" alt="Visa">
+            <img src="img/ui/pago-mastercard.svg" alt="Mastercard">
+            <img src="img/ui/pago-webpay.svg" alt="WebPay">
+            <img src="img/ui/pago-transferencia.svg" alt="Transferencia bancaria">
+          </div>
+        </div>
+      </div>
+      <p class="bt-pie-legal mt-4 pt-3 mb-0">&copy; <span data-bt-anio></span> Botanik &middot; Proyecto academico DSY1104</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/data/usuarios.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/validaciones.js"></script>
+</body>
+</html>
