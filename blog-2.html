@@ -1,10 +1,163 @@
-<!--
-  Vista: Detalle de blog 2
-  Requerimientos: R.13
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Riego por inmersion paso a paso: cuando conviene, como se hace y que problemas resuelve en plantas de interior.">
+  <title>Riego por inmersion | Botanik</title>
+  <link rel="icon" href="img/ui/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
 
-  Contenido esperado (según los mockups del levantamiento):
-  - imagen destacada, titulo y contenido extendido
-  - enlace de vuelta al listado
+  <a class="bt-salto-contenido" href="#contenido">Saltar al contenido</a>
 
-  Scripts a cargar: main.js
--->
+  <header class="bt-cabecera">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg py-2" aria-label="Navegacion principal">
+        <a class="navbar-brand bt-logo" href="index.html">
+          <img src="img/ui/logo.svg" alt="Botanik">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir el menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+          <ul class="navbar-nav bt-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html" data-bt-pagina="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="productos.html" data-bt-pagina="productos.html">Productos</a></li>
+            <li class="nav-item"><a class="nav-link" href="nosotros.html" data-bt-pagina="nosotros.html">Nosotros</a></li>
+            <li class="nav-item"><a class="nav-link" href="blogs.html" data-bt-pagina="blogs.html">Blogs</a></li>
+            <li class="nav-item"><a class="nav-link" href="contacto.html" data-bt-pagina="contacto.html">Contacto</a></li>
+          </ul>
+          <ul class="navbar-nav bt-acceso align-items-lg-center">
+            <li class="nav-item" data-bt-sesion-invitado><a class="nav-link" href="login.html">Iniciar sesion</a></li>
+            <li class="nav-item" data-bt-sesion-invitado><a class="nav-link" href="registro.html">Registrar usuario</a></li>
+            <li class="nav-item d-none" data-bt-sesion-activa><span class="nav-link">Hola, <span data-bt-nombre-usuario></span></span></li>
+            <li class="nav-item d-none" data-bt-sesion-activa data-bt-enlace-admin><a class="nav-link" href="admin/index.html">Administracion</a></li>
+            <li class="nav-item d-none" data-bt-sesion-activa><button class="nav-link" type="button" data-bt-cerrar-sesion data-bt-destino="index.html?sesion=cerrada">Cerrar sesion</button></li>
+            <li class="nav-item ms-lg-3">
+              <a class="nav-link bt-carrito-enlace" href="carrito.html">
+                Carrito <span class="bt-carrito-conteo" data-bt-conteo-carrito>0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <div class="container py-4 py-lg-5">
+
+      <nav aria-label="Ruta de navegacion">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="blogs.html">Blogs</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Riego por inmersion</li>
+        </ol>
+      </nav>
+
+      <article class="bt-articulo">
+        <header>
+          <p class="bt-titulo-seccion mb-2">Tecnica &middot; 6 min de lectura</p>
+          <h1>Riego por inmersion: por que la planta bebe mejor desde abajo</h1>
+          <p class="bt-bajada mt-3">Un balde, quince minutos y se acaban tres problemas a la vez: el sustrato apelmazado, los mosquitos y las hojas manchadas.</p>
+        </header>
+
+        <figure class="my-4">
+          <img class="bt-blog-portada" src="img/blog/blog-2.jpg" alt="Maceta plastica sumergida parcialmente en un recipiente con agua">
+          <figcaption class="form-text mt-2">La maceta se sumerge hasta la mitad, nunca hasta cubrir la superficie del sustrato.</figcaption>
+        </figure>
+
+        <section>
+          <h2 class="h4 mt-4">Que problema resuelve</h2>
+          <p>Cuando un sustrato lleva mucho tiempo en la misma maceta se compacta, y la turba seca se vuelve hidrofoba: repele el agua en vez de absorberla. Si riegas desde arriba, el agua encuentra el camino mas rapido por los costados de la maceta, sale por el orificio, y te deja la sensacion de haber regado. La tierra del centro sigue seca.</p>
+          <p>La inmersion invierte el recorrido. El agua sube por capilaridad desde abajo y moja el sustrato de manera pareja, incluido el nucleo que el riego superficial no alcanza.</p>
+        </section>
+
+        <section>
+          <h2 class="h4 mt-4">Como se hace</h2>
+          <ol>
+            <li class="mb-2">Llena un recipiente con agua a temperatura ambiente hasta unos diez centimetros. Un balde, una fuente o el lavaplatos sirven.</li>
+            <li class="mb-2">Pon la maceta dentro, sin su plato. El agua debe llegar como maximo a la mitad de la altura de la maceta.</li>
+            <li class="mb-2">Espera entre diez y veinte minutos. Vas a ver como la superficie del sustrato se oscurece: esa es la senal de que el agua llego arriba.</li>
+            <li class="mb-2">Saca la maceta y dejala escurrir en el lavaplatos o sobre una rejilla hasta que deje de gotear.</li>
+            <li>Recien entonces devuelvela a su plato o a su macetero decorativo.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="h4 mt-4">Cuando conviene y cuando no</h2>
+          <p>Funciona muy bien en plantas de hoja delicada que se manchan con el agua encima, como las calatheas, y en helechos, que agradecen un sustrato uniformemente humedo. Tambien es la mejor forma de rehidratar una planta que llevaba semanas olvidada.</p>
+          <p>No conviene en suculentas y cactus, que prefieren un riego corto y un secado rapido. Tampoco en plantas con sospecha de pudricion: ahi lo que sobra es agua, no falta.</p>
+        </section>
+
+        <section>
+          <h2 class="h4 mt-4">El efecto sobre los mosquitos del sustrato</h2>
+          <p>Esos mosquitos pequenos que aparecen alrededor de las macetas ponen sus huevos en los primeros centimetros de tierra humeda. Al regar desde abajo, la superficie se mantiene seca mas tiempo y el ciclo se corta sin necesidad de insecticida.</p>
+          <p class="mb-0">No es magia ni funciona de un dia para otro: toma dos o tres riegos. Pero es la solucion mas simple y la unica que no implica echarle quimicos a una planta que vas a tener adentro de la casa.</p>
+        </section>
+
+        <footer class="mt-5 pt-4 border-top">
+          <a class="btn btn-outline-primary" href="blogs.html">Volver a las notas</a>
+        </footer>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="bt-pie">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-12 col-lg-4">
+          <img src="img/ui/logo-blanco.svg" alt="Botanik">
+          <p class="mt-3 mb-0 small">Vivero en linea especializado en plantas, maceteros, sustratos y herramientas de jardineria. Despacho a todo Chile.</p>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h2>Catalogo</h2>
+          <ul class="bt-pie-lista mt-3">
+            <li><a href="productos.html?categoria=plantas">Plantas</a></li>
+            <li><a href="productos.html?categoria=maceteros">Maceteros</a></li>
+            <li><a href="productos.html?categoria=herramientas">Herramientas</a></li>
+          </ul>
+        </div>
+        <div class="col-6 col-lg-2">
+          <h2>Botanik</h2>
+          <ul class="bt-pie-lista mt-3">
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-12 col-lg-4">
+          <h2>Recibe consejos de cuidado</h2>
+          <form class="mt-3" id="formBoletin">
+            <label class="form-label visually-hidden" for="correoBoletin">Correo electronico</label>
+            <div class="input-group">
+              <input class="form-control" type="email" id="correoBoletin" name="correoBoletin" placeholder="tu@correo.cl" autocomplete="email" maxlength="100">
+              <button class="btn btn-light" type="submit">Suscribir</button>
+            </div>
+            <div class="invalid-feedback" data-bt-error="correoBoletin"></div>
+          </form>
+          <div class="bt-pagos mt-3">
+            <img src="img/ui/pago-visa.svg" alt="Visa">
+            <img src="img/ui/pago-mastercard.svg" alt="Mastercard">
+            <img src="img/ui/pago-webpay.svg" alt="WebPay">
+            <img src="img/ui/pago-transferencia.svg" alt="Transferencia bancaria">
+          </div>
+        </div>
+      </div>
+      <p class="bt-pie-legal mt-4 pt-3 mb-0">&copy; <span data-bt-anio></span> Botanik &middot; Proyecto academico DSY1104</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/validaciones.js"></script>
+</body>
+</html>
