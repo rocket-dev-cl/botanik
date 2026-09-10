@@ -1,25 +1,502 @@
 /* ==========================================================================
-   Botanik — Estilos del modulo de administracion
-   Se carga DESPUES de estilos.css: hereda las variables de marca.
+   Botanik — Modulo de administracion
+   Se carga despues de estilos.css y hereda sus variables de marca.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Layout: menu vertical fijo + area de contenido
+   1. Layout
    -------------------------------------------------------------------------- */
+.bt-admin {
+  display: grid;
+  grid-template-columns: 248px 1fr;
+  min-height: 100vh;
+  align-items: stretch;
+}
+
+.bt-admin-columna {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bt-admin-contenido {
+  padding: 1.75rem 2rem 2.5rem;
+  min-width: 0;
+  flex: 1 0 auto;
+}
+
+.bt-admin-pie {
+  border-top: 1px solid var(--bt-gris-300);
+  padding: 1rem 2rem;
+  font-size: var(--bt-escala-xs);
+  color: var(--bt-texto-2);
+}
+
+.bt-admin-encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.bt-admin-encabezado h1 {
+  font-size: var(--bt-escala-h2);
+  margin-bottom: 0.15rem;
+}
 
 /* --------------------------------------------------------------------------
-   2. Menu lateral y estado activo
+   2. Menu lateral
    -------------------------------------------------------------------------- */
+.bt-admin-lateral {
+  background-color: var(--bt-verde-900);
+  color: var(--bt-verde-300);
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bt-admin-marca {
+  padding-inline: 1.35rem;
+}
+
+.bt-admin-marca img {
+  height: 30px;
+  width: auto;
+}
+
+.bt-admin-marca p {
+  font-size: 0.75rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--bt-verde-300);
+  margin: 0.4rem 0 0;
+}
+
+.bt-admin-menu {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.bt-admin-menu a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1.35rem;
+  color: var(--bt-verde-100);
+  font-size: var(--bt-escala-sm);
+  border-left: 3px solid transparent;
+}
+
+.bt-admin-menu a:hover {
+  background-color: var(--bt-verde-800);
+  color: var(--bt-blanco);
+  text-decoration: none;
+}
+
+.bt-admin-menu a.activo {
+  background-color: var(--bt-verde-800);
+  border-left-color: var(--bt-verde-300);
+  color: var(--bt-blanco);
+  font-weight: var(--bt-peso-medio);
+}
+
+.bt-admin-usuario {
+  margin-top: auto;
+  padding: 1rem 1.35rem 0;
+  border-top: 1px solid var(--bt-verde-800);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.bt-admin-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: var(--bt-verde-600);
+  color: var(--bt-blanco);
+  font-size: var(--bt-escala-xs);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.bt-admin-usuario strong {
+  display: block;
+  color: var(--bt-blanco);
+  font-size: var(--bt-escala-sm);
+  font-weight: var(--bt-peso-medio);
+  line-height: 1.3;
+}
+
+.bt-admin-usuario span {
+  font-size: 0.75rem;
+  color: var(--bt-verde-300);
+}
+
+.bt-admin-salir {
+  background: none;
+  border: 0;
+  color: var(--bt-verde-300);
+  font-size: 0.75rem;
+  padding: 0;
+  text-align: left;
+}
+
+.bt-admin-salir:hover {
+  color: var(--bt-blanco);
+  text-decoration: underline;
+}
 
 /* --------------------------------------------------------------------------
-   3. Tablas de los mantenedores
-   Encabezados ordenables, paginacion, fila con stock critico
+   3. Tablas
    -------------------------------------------------------------------------- */
+.bt-tabla-envoltorio {
+  background-color: var(--bt-blanco);
+  border-radius: var(--bt-radio);
+  box-shadow: var(--bt-sombra);
+  overflow-x: auto;
+}
+
+.bt-tabla {
+  margin-bottom: 0;
+  font-size: var(--bt-escala-sm);
+  vertical-align: middle;
+}
+
+.bt-tabla thead th {
+  background-color: var(--bt-gris-100);
+  color: var(--bt-texto-2);
+  font-size: 0.75rem;
+  font-weight: var(--bt-peso-medio);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--bt-gris-300);
+  white-space: nowrap;
+}
+
+.bt-tabla tbody td {
+  border-bottom: 1px solid var(--bt-gris-100);
+}
+
+.bt-tabla .bt-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.bt-orden {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+
+.bt-orden:hover {
+  color: var(--bt-verde-700);
+}
+
+.bt-orden::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  opacity: 0;
+}
+
+.bt-orden[data-bt-direccion="asc"]::after {
+  border-bottom: 5px solid var(--bt-verde-700);
+  opacity: 1;
+}
+
+.bt-orden[data-bt-direccion="desc"]::after {
+  border-top: 5px solid var(--bt-verde-700);
+  opacity: 1;
+}
+
+/* Stock critico: el color de fondo no basta como unica senal, por eso ademas
+   se marca el borde izquierdo y se agrega una etiqueta con texto (R.15). */
+.bt-fila-critica td {
+  background-color: var(--bt-alerta-bg);
+}
+
+.bt-fila-critica td:first-child {
+  box-shadow: inset 3px 0 0 var(--bt-alerta);
+}
+
+.bt-fila-agotada td:first-child {
+  box-shadow: inset 3px 0 0 var(--bt-peligro);
+}
+
+.bt-marca-critica {
+  background-color: var(--bt-alerta);
+  color: var(--bt-blanco);
+  font-size: 0.6875rem;
+  font-weight: var(--bt-peso-medio);
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--bt-radio-pill);
+}
+
+.bt-marca-agotado {
+  background-color: var(--bt-peligro);
+  color: var(--bt-blanco);
+  font-size: 0.6875rem;
+  font-weight: var(--bt-peso-medio);
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--bt-radio-pill);
+}
+
+.bt-perfil {
+  font-size: var(--bt-escala-xs);
+  padding: 0.1rem 0.6rem;
+  border-radius: var(--bt-radio-pill);
+  white-space: nowrap;
+}
+
+.bt-perfil-administrador {
+  background-color: var(--bt-verde-700);
+  color: var(--bt-blanco);
+}
+
+.bt-perfil-vendedor {
+  background-color: var(--bt-verde-100);
+  color: var(--bt-verde-800);
+}
+
+.bt-perfil-cliente {
+  background-color: var(--bt-gris-100);
+  color: var(--bt-texto-2);
+}
+
+.bt-acciones {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.bt-estado {
+  display: inline-block;
+  font-size: var(--bt-escala-xs);
+  font-weight: var(--bt-peso-medio);
+  padding: 0.1rem 0.7rem;
+  border-radius: var(--bt-radio-pill);
+  white-space: nowrap;
+}
+
+.bt-estado-pendiente {
+  background-color: var(--bt-gris-100);
+  color: var(--bt-texto-2);
+}
+
+.bt-estado-preparacion {
+  background-color: var(--bt-alerta-bg);
+  color: var(--bt-alerta);
+}
+
+.bt-estado-despachada {
+  background-color: var(--bt-verde-100);
+  color: var(--bt-verde-800);
+}
+
+.bt-estado-entregada {
+  background-color: var(--bt-verde-700);
+  color: var(--bt-blanco);
+}
+
+.bt-estado-cancelada {
+  background-color: var(--bt-peligro-bg);
+  color: var(--bt-peligro);
+}
+
+.bt-ficha-orden {
+  background-color: var(--bt-blanco);
+  border-radius: var(--bt-radio);
+  box-shadow: var(--bt-sombra-sm);
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.bt-ficha-orden h2 {
+  font-size: var(--bt-escala-xs);
+  font-weight: var(--bt-peso-medio);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--bt-texto-2);
+  margin-bottom: 0.75rem;
+}
+
+.bt-ficha-orden dl {
+  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1rem;
+  font-size: var(--bt-escala-sm);
+}
+
+.bt-ficha-orden dt {
+  color: var(--bt-texto-2);
+  font-weight: 400;
+}
+
+.bt-ficha-orden dd {
+  margin: 0;
+  font-weight: var(--bt-peso-medio);
+}
+
+.bt-totales-orden {
+  margin-left: auto;
+  max-width: 22rem;
+}
+
+.bt-totales-orden .bt-resumen-fila {
+  padding-block: 0.35rem;
+}
+
+.pagination {
+  --bs-pagination-color: var(--bt-texto-2);
+  --bs-pagination-border-color: var(--bt-gris-300);
+  --bs-pagination-hover-color: var(--bt-verde-800);
+  --bs-pagination-hover-bg: var(--bt-gris-100);
+  --bs-pagination-active-bg: var(--bt-verde-700);
+  --bs-pagination-active-border-color: var(--bt-verde-700);
+  --bs-pagination-font-size: var(--bt-escala-sm);
+  margin-bottom: 0;
+}
+
+.bt-pie-tabla {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
 
 /* --------------------------------------------------------------------------
-   4. Formularios de los mantenedores
+   4. Formularios
    -------------------------------------------------------------------------- */
+.bt-admin-form {
+  background-color: var(--bt-blanco);
+  border-radius: var(--bt-radio);
+  box-shadow: var(--bt-sombra);
+  padding: 1.75rem;
+  max-width: 860px;
+}
+
+.bt-admin-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.bt-admin-form legend {
+  font-size: var(--bt-escala-xs);
+  font-weight: var(--bt-peso-medio);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--bt-texto-2);
+  border-bottom: 1px solid var(--bt-gris-300);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  float: none;
+  width: 100%;
+}
+
+.bt-admin-acciones-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--bt-gris-300);
+  padding-top: 1.25rem;
+}
+
+.bt-tarjeta-indicador {
+  background-color: var(--bt-blanco);
+  border-radius: var(--bt-radio);
+  box-shadow: var(--bt-sombra-sm);
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.bt-tarjeta-indicador strong {
+  display: block;
+  font-size: var(--bt-escala-h2);
+  color: var(--bt-verde-900);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.bt-tarjeta-indicador span {
+  font-size: var(--bt-escala-sm);
+  color: var(--bt-texto-2);
+}
 
 /* --------------------------------------------------------------------------
    5. Responsive
    -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+  .bt-admin {
+    grid-template-columns: 1fr;
+  }
+
+  .bt-admin-lateral {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .bt-admin-marca,
+  .bt-admin-usuario {
+    padding: 0;
+    border-top: 0;
+    margin-top: 0;
+  }
+
+  .bt-admin-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .bt-admin-menu a {
+    border-left: 0;
+    border-bottom: 3px solid transparent;
+    padding: 0.5rem 0.85rem;
+    border-radius: var(--bt-radio-sm);
+  }
+
+  .bt-admin-menu a.activo {
+    border-left-color: transparent;
+    border-bottom-color: var(--bt-verde-300);
+  }
+
+  .bt-admin-usuario {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .bt-admin-contenido {
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .bt-admin-form {
+    padding: 1.25rem;
+  }
+}
