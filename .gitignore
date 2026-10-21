@@ -14,8 +14,10 @@ desktop.ini
 *.bak
 *~
 
-# Dependencias (por si más adelante se incorpora alguna herramienta)
+# Dependencias y artefactos generados
 node_modules/
+dist/
+coverage/
 
 # Nunca versionar el proyecto comprimido
 *.zip
