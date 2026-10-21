@@ -25,7 +25,7 @@
  *   }
  */
 
-const ESTADOS_ORDEN = [
+export const ESTADOS_ORDEN = [
   { id: "pendiente",   nombre: "Pendiente" },
   { id: "preparacion", nombre: "En preparacion" },
   { id: "despachada",  nombre: "Despachada" },
@@ -33,7 +33,7 @@ const ESTADOS_ORDEN = [
   { id: "cancelada",   nombre: "Cancelada" }
 ];
 
-const ORDENES = [
+export const ORDENES = [
   {
     numero: "ORD-1001",
     fecha: "2026-07-12",

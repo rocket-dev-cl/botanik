@@ -25,7 +25,7 @@
  *   No alfabetico ni por codigo.
  */
 
-const REGIONES = [
+export const REGIONES = [
   {
     id: "15",
     nombre: "Arica y Parinacota",

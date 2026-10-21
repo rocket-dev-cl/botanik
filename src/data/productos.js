@@ -47,7 +47,7 @@
  *     comportarse bien con el arreglo vacio.
  */
 
-const PRODUCTOS = [
+export const PRODUCTOS = [
   // ---------------------------------------------------------------- Plantas
   {
     codigo: "PL-001",

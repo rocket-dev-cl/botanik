@@ -41,7 +41,7 @@
  *   del codigo. Aca quedo cargado como 190110222, que es el valor correcto.
  */
 
-const USUARIOS = [
+export const USUARIOS = [
   {
     run: "123456785",
     nombre: "Camila",

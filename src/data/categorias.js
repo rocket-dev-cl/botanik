@@ -24,7 +24,7 @@
  *   El texto visible se guarda aparte, igual que value vs contenido en <option>.
  */
 
-const CATEGORIAS = [
+export const CATEGORIAS = [
   {
     id: "plantas",
     nombre: "Plantas",
@@ -64,7 +64,7 @@ const CATEGORIAS = [
  * Listado CERRADO de etiquetas. No se inventan etiquetas al cargar un
  * producto: primero se agregan aca y despues se usan.
  */
-const ETIQUETAS = [
+export const ETIQUETAS = [
   // Plantas — tipo (que es)
   { id: "suculenta",     nombre: "Suculenta",          categoria: "plantas", eje: "tipo" },
   { id: "cactus",        nombre: "Cactus",             categoria: "plantas", eje: "tipo" },
