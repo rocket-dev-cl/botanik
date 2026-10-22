@@ -3,8 +3,54 @@
 Registro de cambios relevantes del proyecto Botanik.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
-## [No publicado]
+## [2.0.0] — Entrega 2
 
+### Cambiado
+- El sitio se migró de HTML y JavaScript sin frameworks a **React 18** con
+  React Router y Vite. Cada vista es un componente y la cabecera y el pie se
+  escriben una sola vez.
+- Bootstrap se instala desde npm. `estilos.css` y `admin.css` se mantienen y se
+  importan después de Bootstrap.
+- Los arreglos de `js/data/` pasan a `src/data/` como módulos.
+- Las imágenes pasan a `public/img/`.
+
+### Agregado
+
+**Datos**
+- `src/services/db.js`: fuente de datos simulada con operaciones de crear, leer,
+  actualizar y eliminar para productos, categorías, usuarios y órdenes,
+  persistidas en `localStorage`.
+- Campo opcional `precioOferta` en el catálogo y artículos del blog en
+  `src/data/blogs.js`.
+
+**Tienda**
+- Vista de categorías con la grilla de cada categoría.
+- Vista de ofertas.
+- Buscador en la cabecera.
+- Checkout con datos del cliente y dirección de entrega, precargados si hay
+  sesión iniciada.
+- Vistas de compra exitosa, con el resumen de la orden, y de pago fallido, con
+  la opción de reintentar.
+
+**Administración**
+- Dashboard con indicadores de compras, productos y usuarios.
+- Boleta de cada orden con cambio de estado.
+- Listado de productos críticos.
+- Mantenedor de categorías.
+- Historial de compras por usuario.
+- Reportes de ventas y perfil del usuario.
+
+**Pruebas**
+- Entorno de pruebas con Karma, Jasmine, Testing Library y karma-coverage.
+- Pruebas de renderizado de listas, renderizado condicional, propiedades,
+  estado y eventos, con mocks mediante `jasmine.createSpy` y `spyOn`.
+
+### Eliminado
+- Las vistas HTML y los scripts `main.js`, `ui.js`, `catalogo.js`,
+  `carrito.js` y `admin.js` de la entrega 1. Su lógica vive ahora en los
+  componentes, contextos y servicios de `src/`.
+
+## [1.0.0] — Entrega 1
 ### Agregado
 
 **Base**

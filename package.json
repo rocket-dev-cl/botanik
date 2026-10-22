@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "karma start karma.conf.cjs"
+    "test": "karma start karma.conf.cjs",
+    "test:ver": "karma start karma.conf.cjs --browsers Chrome --no-single-run --reporters kjhtml,progress,coverage"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
@@ -29,6 +30,7 @@
     "karma-chrome-launcher": "^3.2.0",
     "karma-coverage": "^2.2.1",
     "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.1.0",
     "karma-webpack": "^5.0.1",
     "null-loader": "^4.0.1",
     "vite": "^5.4.11",

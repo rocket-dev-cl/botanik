@@ -1,139 +1,126 @@
 # Botanik
 
 Sitio de comercio electrónico para un vivero: catálogo de plantas, maceteros,
-sustratos, fertilizantes y herramientas de jardinería, con carrito de compras y un
-módulo de administración para mantener el catálogo y los usuarios.
+sustratos, fertilizantes y herramientas de jardinería, con carrito de compras,
+checkout y un módulo de administración.
 
 ## Estado
 
-Fase 1 en desarrollo. Esta fase construye la interfaz completa y la lógica que se
-ejecuta en el navegador. No incluye servidor ni base de datos: los datos se definen en
-arreglos de JavaScript y el carrito persiste en `localStorage`.
+**Entrega 2.** El sitio de la entrega 1 (HTML, CSS y JavaScript sin frameworks) se
+migró a **React**. Se agregaron las vistas de categorías, ofertas, checkout, compra
+exitosa y pago fallido, el administrador completo y pruebas unitarias con **Jasmine
+y Karma**.
+
+La versión de la entrega 1 queda en el tag [`entrega-1`](../../tree/entrega-1).
+
+Sigue sin haber servidor: los datos parten de arreglos de JavaScript y se persisten en
+`localStorage` a través de `src/services/db.js`.
+
+## Cómo ejecutarlo
+
+Requiere Node.js 18 o superior.
+
+```
+npm install
+npm run dev       # sitio en http://localhost:5173
+npm test          # pruebas unitarias con Karma + Jasmine y reporte de cobertura
+npm run test:ver  # las mismas pruebas en un Chrome visible, con la pagina de Jasmine
+npm run build     # version de produccion en dist/
+```
+
+Cuentas de prueba (no se verifican contraseñas, basta un largo de 4 a 10):
+
+| Perfil | Correo |
+|---|---|
+| Administrador | `camila.rojas@profesor.duoc.cl` |
+| Vendedor | `v.cortes@duoc.cl` |
+| Cliente | `josefa.navarro@gmail.com` |
+
+Cupones: `BOTANIK10`, `BIENVENIDA`, `VERDE5000`.
 
 ## Tecnologías
 
-- HTML5 con etiquetado semántico
-- CSS3 en hojas externas, sin estilos embebidos
-- JavaScript sin frameworks
-- Bootstrap como base de maquetación, con hoja de estilos propia por encima
+- React 18 con React Router
+- Vite para desarrollo y construcción
+- Bootstrap 5 como base responsiva, con hoja de estilos propia por encima
+- Jasmine + Karma + Testing Library para las pruebas unitarias, karma-coverage para la cobertura
 
-## Estructura del proyecto
+## Estructura
 
 ```
 botanik/
-├── index.html              Home de la tienda
-├── productos.html          Catálogo con filtros
-├── detalle-producto.html   Ficha de un producto
-├── carrito.html            Carrito de compras
-├── nosotros.html
-├── blogs.html
-├── blog-1.html
-├── blog-2.html
-├── contacto.html
-├── login.html
-├── registro.html
-├── admin/                  Módulo de administración
-│   ├── index.html
-│   ├── productos.html
-│   ├── producto-form.html
-│   ├── usuarios.html
-│   └── usuario-form.html
-├── css/
-│   ├── estilos.css         Estilos de la tienda pública
-│   └── admin.css           Estilos del módulo de administración
-├── js/
-│   ├── data/               Datos del sistema, sin lógica
-│   │   ├── productos.js
-│   │   ├── categorias.js
-│   │   ├── regiones.js
-│   │   └── usuarios.js
-│   ├── main.js             Comportamiento común a todas las páginas
-│   ├── catalogo.js         Listado, filtros y detalle de productos
-│   ├── carrito.js          Carrito y persistencia
-│   ├── validaciones.js     Validaciones de formularios
-│   ├── ui.js               Modales, toasts y componentes de interfaz
-│   └── admin.js            Mantenedores y control de acceso
-└── img/
-    ├── productos/
-    ├── blog/
-    └── ui/
+├── index.html                  Única página: React monta la app en #root
+├── public/img/                 Imágenes, servidas tal cual
+├── src/
+│   ├── main.jsx                Punto de entrada: estilos, Bootstrap y router
+│   ├── App.jsx                 Proveedores y rutas
+│   ├── data/                   Datos de fábrica, sin lógica
+│   ├── services/
+│   │   ├── db.js               Fuente de datos simulada: CRUD sobre localStorage
+│   │   ├── carrito.js          Cálculos del carrito y cupones
+│   │   ├── pago.js             Pago simulado
+│   │   ├── validaciones.js     Reglas de validación de formularios
+│   │   └── formato.js          Precios, fechas y rutas de imagen
+│   ├── context/                Estado compartido: sesión, carrito y avisos
+│   ├── components/             Piezas reutilizables (tarjeta, grilla, campos...)
+│   ├── pages/tienda/           Una vista por ruta de la tienda
+│   ├── pages/admin/            Una vista por ruta del administrador
+│   ├── rutas/                  Rutas de cada módulo, en archivos separados
+│   └── styles/                 estilos.css y admin.css
+├── karma.conf.cjs              Configuración de las pruebas
+└── babel.config.cjs            Compilación de JSX para las pruebas
 ```
 
-### Decisiones de estructura
+Las pruebas viven junto a lo que prueban: `ProductCard.jsx` y `ProductCard.spec.jsx`.
 
-**No se usa `assets/`.** Con solo tres tipos de recurso (css, js, img) ese nivel
-adicional de anidamiento no aporta nada y alarga todas las rutas.
+### Decisiones
 
-**No se usa `src/` y `dist/`.** Esa separación existe cuando hay un proceso de
-construcción que transforma el código fuente en código publicable. Este proyecto no
-tiene ese paso, por lo que `dist/` sería una copia manual de `src/`.
+**Ahora sí hay `src/`.** En la entrega 1 no existía un paso de construcción y la
+carpeta no se justificaba. Con React el JSX se compila, así que se separa el código
+fuente (`src/`) de lo que se publica (`dist/`, generado y no versionado).
 
-**El CSS se divide por módulo, no por página.** El encabezado, el menú y el pie son los
-mismos en todas las vistas de la tienda: una hoja por página duplicaría ese código y
-obligaría a editar diez archivos ante cualquier cambio.
+**Componentes en vez de marcado repetido.** La cabecera y el pie eran literales en
+cada HTML. En React son `Navbar` y `Footer`, y `Layout` los pone alrededor de cada
+página.
 
-**Los datos están separados de la lógica** (`js/data/`). Actualizar el catálogo no debe
-requerir modificar el código que lo muestra. `js/data/categorias.js` es además la fuente
-de verdad de la taxonomía del catálogo: define las categorías, sus subcategorías y el
-listado cerrado de etiquetas.
+**Toda lectura y escritura de datos pasa por `db.js`.** Ningún componente toca los
+arreglos de `src/data/` directamente. Por eso un producto editado en el administrador
+se ve igual en la tienda, y una compra aparece al tiro en el historial de órdenes.
 
-**`admin/` es una carpeta aparte** porque refleja los dos módulos definidos en la
-arquitectura del sistema. Ambos módulos comparten la misma arquitectura de páginas,
-estilos y componentes: la separación es de responsabilidad, no de tecnología.
+**Estado local primero, contexto solo cuando se comparte.** Cada formulario guarda sus
+campos en su propio `useState`. Solo la sesión, el carrito y los avisos están en un
+contexto, porque los necesitan componentes que no tienen relación de padre e hijo.
 
-### Sobre la repetición del encabezado y los componentes
+**Rutas por módulo.** Cada módulo registra sus rutas en su archivo de `src/rutas/`,
+para que dos ramas en paralelo no editen el mismo listado.
 
-El encabezado, la navegación y el pie de página están escritos de forma literal en cada
-página, tanto en la tienda como en el administrador. Fue una decisión deliberada.
-
-Se evaluaron tres alternativas para evitar la duplicación —inyección mediante `fetch`,
-generación por JavaScript y Web Components— y las tres se descartaron por la misma
-razón: el marcado semántico dejaría de existir en el documento entregado y pasaría a
-generarse solo en tiempo de ejecución.
-
-El criterio que gobierna la decisión es:
-
-> **El marcado que es contenido se escribe literal. El marcado que es interfaz se
-> genera.**
-
-Un `header`, un `nav`, un `main` y un `footer` son contenido y deben estar en el
-archivo. Un modal de confirmación, un toast de aviso o un tooltip son comportamiento con
-forma visual: no son contenido y se generan desde JavaScript.
-
-Por eso `js/ui.js` concentra los componentes de interfaz reutilizables sobre Bootstrap:
-
-- `confirmar(mensaje)` — abre un único modal genérico y resuelve según la respuesta. Se
-  utiliza en todas las eliminaciones del administrador.
-- `notificar(mensaje, tipo)` — muestra un toast para confirmar el resultado de una
-  acción.
-
-Ambas funciones existen para cumplir un requisito propio: los mensajes del sistema no
-deben usar las ventanas de alerta del navegador. **No se utilizan `alert()` ni
-`confirm()` en ningún punto del proyecto.**
-
-La inicialización de los tooltips de Bootstrap se realiza una sola vez en `js/main.js`,
-ya que Bootstrap no los activa automáticamente.
-
-Las páginas nuevas se crean a partir de una página existente, no desde cero, para que
-el esqueleto se mantenga idéntico en todas.
+**No se usa `alert()` ni `confirm()`.** Los avisos son toasts (`useNotificacion`) y
+las confirmaciones, el componente `ModalConfirmacion`.
 
 ## Sobre el uso de Bootstrap
 
-Bootstrap aporta la grilla, el sistema responsivo y los componentes con comportamiento.
+Bootstrap aporta la grilla, el sistema responsivo y los componentes con comportamiento
+(menú desplegable, menú hamburguesa). Se carga desde npm en `main.jsx`, con el bundle
+que incluye Popper.
+
 La identidad visual de Botanik —paleta, tipografía, tarjeta de producto, etiquetas— se
-define en `css/estilos.css`, sobrescribiendo las variables CSS de Bootstrap en lugar de
-competir contra sus estilos.
+define en `src/styles/estilos.css` sobrescribiendo las variables CSS de Bootstrap, y se
+importa después de Bootstrap para que gane.
 
-Se requiere `bootstrap.bundle.min.js`, que incluye Popper. La versión sin el bundle deja
-sin funcionar los dropdowns y los tooltips.
+## Pruebas
 
-## Cómo ejecutar el proyecto
+`npm test` levanta Karma, que abre Chrome sin ventana, ejecuta las pruebas de Jasmine y
+genera el reporte de cobertura en `coverage/index.html`. El resumen se imprime al final
+en la consola.
 
-El sitio es estático y no requiere instalación: basta abrir `index.html` en un
-navegador.
+`npm run test:ver` corre las mismas pruebas en un Chrome visible y deja abierta la
+página de Jasmine con cada `describe` e `it` en verde o en rojo. Karma queda vigilando:
+al guardar un archivo vuelve a correr. Se cierra con Ctrl+C.
 
-Para desarrollar se recomienda la extensión **Live Server** de Visual Studio Code, que
-recarga el navegador al guardar.
+Las pruebas cubren los cinco tipos del enunciado: renderizado de listas, renderizado
+condicional, propiedades, estado y eventos. Los mocks se hacen con `jasmine.createSpy`
+(funciones falsas pasadas por props) y `spyOn` sobre `db` y `pago` (para no depender de
+los datos reales).
 
 ## Convención de mensajes de commit
 
@@ -149,34 +136,17 @@ Se utiliza [Conventional Commits](https://www.conventionalcommits.org/es/):
 | `fix` | Se corrige un error |
 | `style` | Cambios visuales o de formato, sin alterar comportamiento |
 | `refactor` | Se reorganiza código sin cambiar lo que hace |
+| `test` | Se agregan o corrigen pruebas |
 | `docs` | Documentación |
 | `chore` | Configuración, estructura, tareas de mantenimiento |
-
-Ejemplos:
-
-```
-feat(carrito): persistir el contenido en localStorage
-fix(registro): corregir el cálculo del dígito verificador del RUN
-style(catalogo): ajustar la grilla de productos en pantallas pequeñas
-docs(readme): documentar la estructura de carpetas
-```
 
 ## Flujo de trabajo
 
 La rama `main` se mantiene siempre funcional. El trabajo se realiza en ramas por
-funcionalidad y se integra mediante Pull Request revisado por el otro integrante.
+funcionalidad y se integra mediante Pull Request.
 
 ```
 feat/nombre-de-la-funcionalidad
 fix/descripcion-del-error
 docs/tema
 ```
-
-## Documentación
-
-Este repositorio contiene únicamente `README.md` y `CHANGELOG.md`.
-
-La especificación de requisitos, la planilla de requerimientos, el análisis de
-interfaces y la bitácora de decisiones son documentación de gestión del proyecto y se
-mantienen fuera del repositorio. Lo que se versiona acá es lo que necesita quien clona
-para entender y ejecutar el código.
