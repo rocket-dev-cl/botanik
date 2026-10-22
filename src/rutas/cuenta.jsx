@@ -4,4 +4,11 @@
  * editen el mismo listado al mismo tiempo.
  */
 
-export const rutasCuenta = [];
+import { Route } from "react-router-dom";
+import Login from "../pages/tienda/Login.jsx";
+import Registro from "../pages/tienda/Registro.jsx";
+
+export const rutasCuenta = [
+  <Route key="login" path="login" element={<Login />} />,
+  <Route key="registro" path="registro" element={<Registro />} />
+];
