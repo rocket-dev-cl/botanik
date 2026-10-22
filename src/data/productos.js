@@ -9,6 +9,7 @@
  *     nombre:       "",              // requerido, max 100
  *     descripcion:  "",              // opcional, max 500
  *     precio:       0,               // requerido, min 0 (0 = producto FREE), admite decimales
+ *     precioOferta: 0,               // opcional, menor que precio. Si existe, el producto esta en oferta
  *     stock:        0,               // requerido, entero, min 0
  *     stockCritico: 0,               // opcional, entero, min 0
  *     categoria:    "plantas",       // requerido, id de CATEGORIAS
@@ -24,6 +25,11 @@
  *   marca en el dato y no tomando los 8 primeros del arreglo, porque atar el
  *   destacado a la posicion significa que reordenar el catalogo cambia la
  *   portada sin que nadie lo haya pedido. Son exactamente 8 en true.
+ *
+ * CAMPO AGREGADO EN LA ENTREGA 2: precioOferta
+ *   La vista Ofertas lista los productos que lo tienen. Se guarda como precio
+ *   final y no como porcentaje, para que la tarjeta muestre los dos valores
+ *   (el normal tachado) sin calcular nada. Son 8 productos.
  *
  * CONVENCION DEL CODIGO
  *   Dos letras de familia mas correlativo: PL plantas, MC maceteros,
@@ -110,6 +116,7 @@ export const PRODUCTOS = [
     nombre: "Calathea orbifolia",
     descripcion: "Hojas anchas con vetas plateadas que se pliegan de noche y vuelven a abrirse de dia. Pide humedad ambiental, asi que se lleva bien con cocinas y banos con luz.",
     precio: 19990,
+    precioOferta: 15990,
     stock: 12,
     stockCritico: 4,
     categoria: "plantas",
@@ -152,6 +159,7 @@ export const PRODUCTOS = [
     nombre: "Palma areca",
     descripcion: "Palma de interior que aporta altura sin ocupar mucho suelo. Es de las mas eficientes filtrando el aire de espacios cerrados y no representa riesgo para gatos ni perros.",
     precio: 27990,
+    precioOferta: 22990,
     stock: 9,
     stockCritico: 4,
     categoria: "plantas",
@@ -208,6 +216,7 @@ export const PRODUCTOS = [
     nombre: "Set de 6 suculentas surtidas",
     descripcion: "Seis suculentas distintas en maceta de 5 centimetros. La combinacion varia segun disponibilidad de vivero. Pensado para armar una repisa completa de una sola vez o para regalar.",
     precio: 14990,
+    precioOferta: 11990,
     stock: 15,
     stockCritico: 5,
     categoria: "plantas",
@@ -306,6 +315,7 @@ export const PRODUCTOS = [
     nombre: "Olivo",
     descripcion: "Arbol de hoja perenne y porte mediterraneo. Aguanta veranos secos y suelos pobres. En maceta grande se mantiene controlado y sirve como pieza central de una terraza.",
     precio: 45990,
+    precioOferta: 39990,
     stock: 7,
     stockCritico: 3,
     categoria: "plantas",
@@ -406,6 +416,7 @@ export const PRODUCTOS = [
     nombre: "Macetero con autorriego 16 cm",
     descripcion: "Deposito inferior con indicador de nivel: la planta toma el agua por capilaridad y el riego pasa a ser quincenal. Resuelve viajes y semanas complicadas.",
     precio: 11990,
+    precioOferta: 9590,
     stock: 26,
     stockCritico: 7,
     categoria: "maceteros",
@@ -476,6 +487,7 @@ export const PRODUCTOS = [
     nombre: "Macetero con autorriego exterior 30 cm",
     descripcion: "Deposito de dos litros y rebalse lateral para que la lluvia no ahogue la raiz. Para plantas de terraza que reciben sol todo el dia.",
     precio: 18990,
+    precioOferta: 14990,
     stock: 13,
     stockCritico: 4,
     categoria: "maceteros",
@@ -520,6 +532,7 @@ export const PRODUCTOS = [
     nombre: "Humus de lombriz 4 L",
     descripcion: "Abono organico de liberacion lenta. Se mezcla con el sustrato al trasplantar o se aplica en superficie una vez al mes.",
     precio: 5990,
+    precioOferta: 4790,
     stock: 44,
     stockCritico: 12,
     categoria: "sustratos-fertilizantes",
@@ -676,6 +689,7 @@ export const PRODUCTOS = [
     nombre: "Kit de riego por goteo",
     descripcion: "Quince metros de manguera, veinte goteros regulables y conectores. Para automatizar el riego de una terraza mediana.",
     precio: 19990,
+    precioOferta: 15990,
     stock: 10,
     stockCritico: 3,
     categoria: "herramientas",
