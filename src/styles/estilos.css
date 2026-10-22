@@ -824,3 +824,34 @@ img { max-width: 100%; }
     bottom: 1rem;
   }
 }
+
+/* Entrega 2 — tienda */
+
+/* El enlace del carrito ahora es un boton verde: texto y contador invertidos. */
+.btn.bt-carrito-enlace,
+.btn.bt-carrito-enlace:hover {
+  color: var(--bt-blanco);
+}
+
+.btn.bt-carrito-enlace .bt-carrito-conteo {
+  background-color: var(--bt-blanco);
+  color: var(--bt-verde-700);
+}
+
+.bt-producto-etiqueta-foto.bt-oferta {
+  background-color: var(--bt-peligro);
+  color: var(--bt-blanco);
+}
+
+.bt-precio-oferta {
+  color: var(--bt-peligro);
+}
+
+.bt-categoria-foto .card-img-top {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.bt-categoria-foto.activa {
+  outline: 2px solid var(--bt-verde-700);
+}

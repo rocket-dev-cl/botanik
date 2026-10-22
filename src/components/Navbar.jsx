@@ -10,7 +10,9 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSesion } from "../context/SesionContext.jsx";
+import { useCarrito } from "../context/CarritoContext.jsx";
 import { db } from "../services/db.js";
+import { formatearPrecio } from "../services/formato.js";
 
 function claseEnlace({ isActive }) {
   return "nav-link" + (isActive ? " activo" : "");
@@ -18,6 +20,7 @@ function claseEnlace({ isActive }) {
 
 export default function Navbar() {
   const { usuario, cerrarSesion, puedeEntrarAdmin } = useSesion();
+  const { cantidadTotal, total } = useCarrito();
   const [busqueda, setBusqueda] = useState("");
   const navegar = useNavigate();
   const categorias = db.getCategorias();
@@ -88,7 +91,9 @@ export default function Navbar() {
                 </>
               )}
               <li className="nav-item ms-lg-3">
-                <NavLink className="nav-link bt-carrito-enlace" to="/carrito">Carrito</NavLink>
+                <NavLink className="btn btn-primary btn-sm bt-carrito-enlace" to="/carrito" aria-label={"Carrito: " + cantidadTotal + " productos"}>
+                  Carrito <span className="bt-carrito-conteo">{cantidadTotal}</span> {formatearPrecio(total)}
+                </NavLink>
               </li>
             </ul>
           </div>
