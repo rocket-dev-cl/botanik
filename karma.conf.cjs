@@ -4,6 +4,9 @@
  * Karma abre un Chrome sin ventana, carga las pruebas empaquetadas por webpack y
  * Jasmine las ejecuta. babel-plugin-istanbul instrumenta el codigo de src/ para
  * medir la cobertura, que queda en coverage/index.html y se resume en consola.
+ *
+ * npm run test:ver abre un Chrome visible y deja la pagina de Jasmine con el
+ * resultado de cada prueba (reporter kjhtml); se cierra con Ctrl+C.
  */
 module.exports = function (config) {
   config.set({
@@ -42,6 +45,9 @@ module.exports = function (config) {
     },
 
     reporters: ["progress", "coverage"],
+
+    // Deja visible el reporte de Jasmine en el navegador al terminar.
+    client: { clearContext: false },
 
     coverageReporter: {
       dir: "coverage/",
